@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        #waterMark {
+            /* border: 1px solid #f00; */
+            /* position: absolute;
+            top: -188px;
+            left: 0; */
+            /* transform: rotate(30deg) */
+        }
+        img {
+            width: 66px;
+            height: 66px;
+            /* display: none; */
+        }
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+        }
+        .content {
+            position: absolute;
+            top: 110px;
+        }
+    </style>
+</head>
+<body>
+    <img id="pic" src="./pic.png" alt="pic">
+    <p>2132312</p>
+    <canvas id="waterMark" width="750" height="750"></canvas>
+    <p id="waterText">water Text</p>
+    <p class="content">看看水印效果看看水印效果看看水印效果看看水印效果看看水印效果看看水印效果
+            看看水印效果看看水印效果看看水印效果看看水印效果看看水印效果看看水印效果
+            看看水印效果看看水印效果看看水印效果看看水印效果看看水印效果看看水印效果
+            看看水印效果看看水印效果看看水印效果看看水印效果看看水印效果看看水印效果
+            看看水印效果看看水印效果看看水印效果看看水印效果看看水印效果看看水印效果
+    </p>
+    <script>
+        var waterImg = document.getElementById('waterMark');
+        var waterText = document.getElementById('waterText');
+        var img = document.getElementById("pic")
+        var ctx = waterImg.getContext('2d');
+
+        // 密铺水印
+        document.getElementById('pic').onload = function() {
+            var waterTextImg = new Image();
+            waterTextImg.src = './pic.png';
+            ctx.fillStyle = '#ff0';
+            ctx.globalAlpha = .3;
+            ctx.font = '20px Arial';
+            angle = 30 * Math.PI/180;
+            cvsHeight = waterImg.height * 1.4;
+            cvsWidth = waterImg.width * 1.4;
+            xGap = 20 * waterText.textContent.length;
+            yGap = 20 * 8;
+            ctx.rotate(-angle);
+            var x, y;
+            for (x = -cvsWidth; x <= cvsWidth; x += (xGap)) {
+                for (y = -cvsHeight; y <= cvsHeight; y += (yGap)) {
+                    ctx.drawImage(waterTextImg, x - 20, y - 15, 20, 20)
+                    ctx.drawImage(waterTextImg, x + xGap/2 - 20, y + yGap/2 - 15, 20, 20)
+                    ctx.fillText(waterText.textContent, x, y);
+                    ctx.fillText(waterText.textContent, x + xGap/2, y + yGap/2);
+                }
+            }
+            ctx.rotate(angle);
+        }
+
+        // 上面并不能实现响应式，以下实现响应式
+        function resizeCanvas () {
+            waterImg.width = document.body.clientWidth;
+            waterImg.height = document.body.clientHeight;
+        }
+        resizeCanvas()
+    </script>
+</body>
+</html>
