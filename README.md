@@ -94,3 +94,47 @@
     }
     ctx.rotate(angle);
 ```
+
+## 6.带logo 文字的水印
+```
+    var img = document.getElementById("pic")
+
+    // 密铺水印
+    document.getElementById('pic').onload = function() {
+        var waterTextImg = new Image();
+        waterTextImg.src = './pic.png';
+        ctx.fillStyle = '#ff0';
+        ctx.globalAlpha = .3;
+        ctx.font = '20px Arial';
+        angle = 30 * Math.PI/180;
+        cvsHeight = waterImg.height * 1.4;
+        cvsWidth = waterImg.width * 1.4;
+        xGap = 20 * waterText.textContent.length;
+        yGap = 20 * 8;
+        ctx.rotate(-angle);
+        var x, y;
+        for (x = -cvsWidth; x <= cvsWidth; x += (xGap)) {
+            for (y = -cvsHeight; y <= cvsHeight; y += (yGap)) {
+                // 画logo
+                ctx.drawImage(waterTextImg, x - 20, y - 15, 20, 20)
+                ctx.drawImage(waterTextImg, x + xGap/2 - 20, y + yGap/2 - 15, 20, 20)
+                // 画文字
+                ctx.fillText(waterText.textContent, x, y);
+                ctx.fillText(waterText.textContent, x + xGap/2, y + yGap/2);
+            }
+        }
+        ctx.rotate(angle);
+    }
+```
+
+## 7.自适应屏幕
+```
+    // 上面并不能实现响应式，以下实现响应式
+    function resizeCanvas () {
+        waterImg.width = document.body.clientWidth;
+        waterImg.height = document.body.clientHeight;
+    }
+    resizeCanvas()
+```
+
+### 说明：可以直接下载shuiyin-Screen.html,里面有做带logo版的水印，纯js实现
