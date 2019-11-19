@@ -137,4 +137,4 @@
     resizeCanvas()
 ```
 
-### 说明：可以直接下载shuiyin-Screen.html,里面有做带logo版的水印，纯js实现
+### 备注：可以直接下载shuiyin-Screen.html,里面有做带logo版的水印，纯js实现
